@@ -54,6 +54,12 @@ public sealed class AppServices : IDisposable
 
     public bool AdaptiveBitrate { get; set; }
 
+    /// <summary>How the two channels are presented (stereo/mono/left/right).</summary>
+    public AudioChannelMode ChannelMode { get; set; } = AudioChannelMode.Stereo;
+
+    /// <summary>Equalizer band gains in dB (−12..+12), low to high.</summary>
+    public int[] EqGainsDb { get; } = new int[StreamProtocol.EqBandCount];
+
     /// <summary>Pushes the current audio settings to the server.</summary>
     public void ApplyAudioSettings()
     {
@@ -62,6 +68,13 @@ public sealed class AppServices : IDisposable
         var loss = (int)Math.Clamp(_player.Underruns * 100 / expected, 0, 50);
 
         var control = StreamProtocol.CreateAudioSettingsControl(TargetBitrate, UseFec, loss);
+        _transport?.Send(control);
+    }
+
+    /// <summary>Pushes the channel mix and equalizer settings to the server.</summary>
+    public void ApplyChannelEq()
+    {
+        var control = StreamProtocol.CreateChannelEqControl(ChannelMode, EqGainsDb);
         _transport?.Send(control);
     }
 
@@ -149,6 +162,7 @@ public sealed class AppServices : IDisposable
 
         // Tell the server which audio settings to use.
         ApplyAudioSettings();
+        ApplyChannelEq();
 
         _notifications.ShowPlaying($"Reproduciendo audio de {endpoint.Host}");
         Log?.Invoke("Reproduciendo salida del sistema en tiempo real.");

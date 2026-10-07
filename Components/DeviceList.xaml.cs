@@ -3,20 +3,24 @@ using Stars.Client.Features.Discovery;
 
 namespace Stars.Client.Components;
 
-public partial class ServerList : ContentView
+/// <summary>Selectable list of discovered servers/devices.</summary>
+public partial class DeviceList : ContentView
 {
     public static readonly BindableProperty TitleProperty =
-        BindableProperty.Create(nameof(Title), typeof(string), typeof(ServerList), "Servidores encontrados");
+        BindableProperty.Create(nameof(Title), typeof(string), typeof(DeviceList), "SERVIDORES");
 
     public static readonly BindableProperty ItemsSourceProperty =
-        BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(ServerList), null);
+        BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(DeviceList), null);
 
     public static readonly BindableProperty ListHeightProperty =
-        BindableProperty.Create(nameof(ListHeight), typeof(double), typeof(ServerList), 120.0);
+        BindableProperty.Create(nameof(ListHeight), typeof(double), typeof(DeviceList), 120.0);
+
+    public DeviceList()
+    {
+        InitializeComponent();
+    }
 
     public event EventHandler<DiscoveredServer>? ServerSelected;
-
-    public ServerList() => InitializeComponent();
 
     public string Title
     {
@@ -40,5 +44,8 @@ public partial class ServerList : ContentView
     {
         if (e.CurrentSelection.FirstOrDefault() is DiscoveredServer server)
             ServerSelected?.Invoke(this, server);
+
+        if (sender is CollectionView view)
+            view.SelectedItem = null;
     }
 }

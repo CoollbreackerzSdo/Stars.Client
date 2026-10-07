@@ -1,32 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <Color x:Key="AuroraLilac">#1F6B4E</Color>
-    <Color x:Key="AuroraSky">#376F78</Color>
-    <Color x:Key="AuroraPink">#B94E3A</Color>
-    <Color x:Key="AuroraPeach">#A66A37</Color>
-    <Color x:Key="AuroraMint">#B9DB78</Color>
 
+    <!-- =============================================================== -->
+    <!--  Stars · "Signal" — flat, high-contrast, dark-first control UI  -->
+    <!-- =============================================================== -->
+
+    <!-- Accents -->
+    <Color x:Key="Signal">#2DD4BF</Color>
+    <Color x:Key="SignalDeep">#0D9488</Color>
+    <Color x:Key="Indigo">#818CF8</Color>
+    <Color x:Key="Amber">#FBBF24</Color>
+    <Color x:Key="Rose">#FB7185</Color>
+    <Color x:Key="Mint">#34D399</Color>
+    <Color x:Key="AccentIndigo">#818CF8</Color>
+    <Color x:Key="AccentCyan">#2DD4BF</Color>
+    <Color x:Key="AccentPink">#FB7185</Color>
+    <Color x:Key="AccentEmerald">#34D399</Color>
+    <Color x:Key="AccentRose">#FB7185</Color>
+    <Color x:Key="AccentAmber">#FBBF24</Color>
+    <!-- legacy aliases -->
+    <Color x:Key="AuroraLilac">#818CF8</Color>
+    <Color x:Key="AuroraSky">#2DD4BF</Color>
+    <Color x:Key="AuroraPink">#FB7185</Color>
+    <Color x:Key="AuroraMint">#34D399</Color>
+
+    <!-- Light theme -->
+    <Color x:Key="LightCanvas">#F2F4F8</Color>
     <Color x:Key="LightSurface">#FFFFFF</Color>
-    <Color x:Key="LightSurfaceAlt">#EFF3EF</Color>
-    <Color x:Key="LightText">#15231A</Color>
-    <Color x:Key="LightTextSoft">#536258</Color>
-    <Color x:Key="LightLine">#DCE5DD</Color>
-    <Color x:Key="DarkSurface">#19211B</Color>
-    <Color x:Key="DarkSurfaceAlt">#222C24</Color>
-    <Color x:Key="DarkText">#EEF4EE</Color>
-    <Color x:Key="DarkTextSoft">#A6B4A8</Color>
-    <Color x:Key="DarkLine">#364238</Color>
+    <Color x:Key="LightSurfaceAlt">#EAEEF5</Color>
+    <Color x:Key="LightText">#0B1220</Color>
+    <Color x:Key="LightTextSoft">#5A6B84</Color>
+    <Color x:Key="LightLine">#D6DDE9</Color>
 
-    <SolidColorBrush x:Key="PageBgLight" Color="#F3F6F3" />
-    <SolidColorBrush x:Key="PageBgDark" Color="#111813" />
-    <SolidColorBrush x:Key="PrimaryBrush" Color="#1F6B4E" />
-    <SolidColorBrush x:Key="WarmBrush" Color="#A84232" />
-    <SolidColorBrush x:Key="MintBrush" Color="#B9DB78" />
-    <SolidColorBrush x:Key="HeroBrush" Color="#376F78" />
+    <!-- Dark theme -->
+    <Color x:Key="DarkCanvas">#080A0F</Color>
+    <Color x:Key="DarkSurface">#111520</Color>
+    <Color x:Key="DarkSurfaceAlt">#1A2130</Color>
+    <Color x:Key="DarkText">#E8EDF6</Color>
+    <Color x:Key="DarkTextSoft">#7C8AA3</Color>
+    <Color x:Key="DarkLine">#232C3D</Color>
 
+    <!-- Brushes -->
+    <SolidColorBrush x:Key="SignalBrush" Color="#2DD4BF" />
+    <SolidColorBrush x:Key="PrimaryBrush" Color="#2DD4BF" />
+    <SolidColorBrush x:Key="WarmBrush" Color="#FB7185" />
+    <SolidColorBrush x:Key="MintBrush" Color="#34D399" />
+    <SolidColorBrush x:Key="HeroBrush" Color="#2DD4BF" />
+
+    <!-- ============ Page & shell ============ -->
     <Style TargetType="ContentPage">
-        <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource PageBgLight}, Dark={StaticResource PageBgDark}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightCanvas}, Dark={StaticResource DarkCanvas}}" />
     </Style>
 
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
@@ -34,21 +58,36 @@
         <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" />
         <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" />
         <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Light={StaticResource LightSurface}, Dark={StaticResource DarkSurface}}" />
-        <Setter Property="Shell.TabBarForegroundColor" Value="{AppThemeBinding Light={StaticResource AuroraLilac}, Dark={StaticResource AuroraMint}}" />
-        <Setter Property="Shell.TabBarTitleColor" Value="{AppThemeBinding Light={StaticResource AuroraLilac}, Dark={StaticResource AuroraMint}}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Signal}" />
+        <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource Signal}" />
         <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Light={StaticResource LightTextSoft}, Dark={StaticResource DarkTextSoft}}" />
     </Style>
 
-    <Style x:Key="AppTitle" TargetType="Label">
+    <!-- ============ Typography ============ -->
+    <Style x:Key="Display" TargetType="Label">
         <Setter Property="FontFamily" Value="OpenSansSemibold" />
-        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontSize" Value="26" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" />
     </Style>
+    <Style x:Key="AppTitle" TargetType="Label" BasedOn="{StaticResource Display}" />
+    <Style x:Key="HeroTitle" TargetType="Label" BasedOn="{StaticResource Display}" />
     <Style x:Key="SectionTitle" TargetType="Label">
         <Setter Property="FontFamily" Value="OpenSansSemibold" />
-        <Setter Property="FontSize" Value="17" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="CharacterSpacing" Value="2" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightTextSoft}, Dark={StaticResource DarkTextSoft}}" />
+    </Style>
+    <Style x:Key="ItemTitle" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="15" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" />
     </Style>
+    <Style x:Key="ReadoutValue" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="26" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" />
+    </Style>
+    <Style x:Key="Metric" TargetType="Label" BasedOn="{StaticResource ReadoutValue}" />
     <Style x:Key="PageLabel" TargetType="Label">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightTextSoft}, Dark={StaticResource DarkTextSoft}}" />
@@ -57,68 +96,80 @@
         <Setter Property="FontSize" Value="12" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightTextSoft}, Dark={StaticResource DarkTextSoft}}" />
     </Style>
-    <Style x:Key="Eyebrow" TargetType="Label">
-        <Setter Property="FontFamily" Value="OpenSansSemibold" />
-        <Setter Property="FontSize" Value="11" />
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightTextSoft}, Dark={StaticResource DarkTextSoft}}" />
-    </Style>
 
-    <Style x:Key="Card" TargetType="Border">
+    <!-- ============ Surfaces ============ -->
+    <Style x:Key="Panel" TargetType="Border">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightSurface}, Dark={StaticResource DarkSurface}}" />
         <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource LightLine}, Dark={StaticResource DarkLine}}" />
         <Setter Property="StrokeThickness" Value="1" />
-        <Setter Property="Padding" Value="16" />
+        <Setter Property="Padding" Value="18" />
         <Setter Property="StrokeShape">
-            <Setter.Value><RoundRectangle CornerRadius="8" /></Setter.Value>
+            <Setter.Value><RoundRectangle CornerRadius="18" /></Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="Card" TargetType="Border" BasedOn="{StaticResource Panel}" />
+    <Style x:Key="Inset" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightSurfaceAlt}, Dark={StaticResource DarkSurfaceAlt}}" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="Padding" Value="14" />
+        <Setter Property="StrokeShape">
+            <Setter.Value><RoundRectangle CornerRadius="14" /></Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="Tile" TargetType="Border" BasedOn="{StaticResource Inset}" />
+    <Style x:Key="Chip" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightSurfaceAlt}, Dark={StaticResource DarkSurfaceAlt}}" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="WidthRequest" Value="42" />
+        <Setter Property="HeightRequest" Value="42" />
+        <Setter Property="StrokeShape">
+            <Setter.Value><RoundRectangle CornerRadius="12" /></Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="Badge" TargetType="Border">
+        <Setter Property="Padding" Value="12,7" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape">
+            <Setter.Value><RoundRectangle CornerRadius="10" /></Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ============ Buttons ============ -->
     <Style x:Key="Pill" TargetType="Button">
         <Setter Property="FontFamily" Value="OpenSansSemibold" />
         <Setter Property="FontSize" Value="15" />
-        <Setter Property="TextColor" Value="White" />
-        <Setter Property="Background" Value="{StaticResource PrimaryBrush}" />
-        <Setter Property="CornerRadius" Value="6" />
-        <Setter Property="Padding" Value="16,12" />
-        <Setter Property="MinimumHeightRequest" Value="48" />
+        <Setter Property="TextColor" Value="#04211C" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Signal}" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="Padding" Value="18,14" />
+        <Setter Property="MinimumHeightRequest" Value="52" />
         <Setter Property="BorderWidth" Value="0" />
     </Style>
     <Style x:Key="PillWarm" TargetType="Button" BasedOn="{StaticResource Pill}">
-        <Setter Property="Background" Value="{StaticResource WarmBrush}" />
+        <Setter Property="TextColor" Value="#2A0710" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Rose}" />
     </Style>
     <Style x:Key="PillMint" TargetType="Button" BasedOn="{StaticResource Pill}">
-        <Setter Property="TextColor" Value="#17221A" />
-        <Setter Property="Background" Value="{StaticResource MintBrush}" />
+        <Setter Property="TextColor" Value="#06231B" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Mint}" />
     </Style>
     <Style x:Key="PillSoft" TargetType="Button">
         <Setter Property="FontFamily" Value="OpenSansSemibold" />
         <Setter Property="FontSize" Value="15" />
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AuroraLilac}, Dark={StaticResource AuroraMint}}" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#E8EFE9, Dark=#29352C}" />
-        <Setter Property="CornerRadius" Value="6" />
-        <Setter Property="Padding" Value="14,10" />
-        <Setter Property="MinimumHeightRequest" Value="46" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightSurfaceAlt}, Dark={StaticResource DarkSurfaceAlt}}" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="Padding" Value="16,12" />
+        <Setter Property="MinimumHeightRequest" Value="50" />
         <Setter Property="BorderWidth" Value="0" />
     </Style>
+
+    <!-- ============ Inputs ============ -->
     <Style x:Key="EntryBox" TargetType="Entry">
         <Setter Property="FontSize" Value="15" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" />
         <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource LightTextSoft}, Dark={StaticResource DarkTextSoft}}" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#F0F4F0, Dark=#222C24}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightSurfaceAlt}, Dark={StaticResource DarkSurfaceAlt}}" />
         <Setter Property="HeightRequest" Value="50" />
-    </Style>
-    <Style x:Key="Badge" TargetType="Border">
-        <Setter Property="Padding" Value="8,4" />
-        <Setter Property="StrokeThickness" Value="0" />
-        <Setter Property="StrokeShape">
-            <Setter.Value><RoundRectangle CornerRadius="4" /></Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="Tile" TargetType="Border">
-        <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="StrokeThickness" Value="0" />
-        <Setter Property="Padding" Value="8,6" />
-        <Setter Property="StrokeShape">
-            <Setter.Value><RoundRectangle CornerRadius="4" /></Setter.Value>
-        </Setter>
     </Style>
 </ResourceDictionary>

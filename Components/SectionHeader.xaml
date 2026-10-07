@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Stars.Client.Components"
+             x:Class="Stars.Client.Components.SectionHeader"
+             x:DataType="local:SectionHeader"
+             x:Name="Root">
+    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+        <Label Grid.Column="0" Text="{Binding Title, Source={x:Reference Root}}"
+               Style="{StaticResource SectionTitle}" VerticalOptions="Center" />
+        <Label Grid.Column="1" Text="{Binding Trailing, Source={x:Reference Root}}"
+               Style="{StaticResource Caption}" VerticalOptions="Center"
+               IsVisible="{Binding HasTrailing, Source={x:Reference Root}}" />
+    </Grid>
+</ContentView>

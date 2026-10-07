@@ -5,40 +5,42 @@
              xmlns:components="clr-namespace:Stars.Client.Components"
              xmlns:vm="clr-namespace:Stars.Client"
              x:DataType="vm:MainViewModel"
-             Title="Ajustes">
+             Title="Sistema">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20,24,20,32" Spacing="18">
-            <components:HeroHeader Title="Ajustes"
-                                   Subtitle="Apariencia y preferencias." />
+        <VerticalStackLayout Padding="20,22,20,36" Spacing="18">
 
-            <components:FluffyCard x:Name="AppearanceCard">
+            <components:AppHeader Subtitle="Sistema"
+                                  Status="{Binding StatusText}"
+                                  StatusColor="{Binding StatusColor}" />
+
+            <Border Style="{StaticResource Panel}">
                 <VerticalStackLayout Spacing="16">
-                    <Label Text="Apariencia" Style="{StaticResource SectionTitle}" />
+                    <components:SectionHeader Title="APARIENCIA" />
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
-                        <Label Grid.Column="0" Text="🌗" FontSize="22" VerticalOptions="Center" />
-                        <VerticalStackLayout Grid.Column="1">
-                            <Label Text="Tema oscuro" FontFamily="OpenSansSemibold" FontSize="15"
-                                   TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" />
-                            <Label Text="Alterna entre claro y oscuro." Style="{StaticResource Caption}" />
+                        <Border Grid.Column="0" Style="{StaticResource Chip}">
+                            <Label Text="🌗" FontSize="19" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="Tema oscuro" Style="{StaticResource ItemTitle}" />
+                            <Label Text="Alterna claro y oscuro." Style="{StaticResource Caption}" />
                         </VerticalStackLayout>
                         <Switch Grid.Column="2" IsToggled="{Binding IsDark, Mode=TwoWay}"
-                                OnColor="{StaticResource AuroraLilac}" VerticalOptions="Center" />
+                                OnColor="{StaticResource Signal}" VerticalOptions="Center" />
                     </Grid>
                 </VerticalStackLayout>
-            </components:FluffyCard>
+            </Border>
 
-            <components:FluffyCard x:Name="ActivityCard">
-                <components:ActivityLog Title="Actividad" ItemsSource="{Binding LogLines}" ListHeight="200" />
-            </components:FluffyCard>
+            <components:LogPanel Title="ACTIVIDAD" ItemsSource="{Binding LogLines}" ListHeight="200" />
 
-            <components:FluffyCard x:Name="AboutCard">
+            <Border Style="{StaticResource Panel}">
                 <VerticalStackLayout Spacing="6">
-                    <Label Text="Acerca de" Style="{StaticResource SectionTitle}" />
+                    <components:SectionHeader Title="ACERCA DE" />
                     <Label Text="Stars · cliente · v1.0.0" Style="{StaticResource Caption}" />
                     <Label Text=".NET 11 · MAUI · Opus" Style="{StaticResource Caption}" />
                 </VerticalStackLayout>
-            </components:FluffyCard>
+            </Border>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

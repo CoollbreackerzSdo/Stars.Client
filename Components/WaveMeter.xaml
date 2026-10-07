@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Stars.Client.Components"
+             xmlns:shared="clr-namespace:Stars.Client.Shared"
+             x:Class="Stars.Client.Components.WaveMeter"
+             x:DataType="local:WaveMeter"
+             x:Name="Root">
+    <ContentView.Resources>
+        <shared:LevelToHeightConverter x:Key="LevelToHeight" />
+    </ContentView.Resources>
+    <Grid HeightRequest="88" HorizontalOptions="Center" ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+          ColumnSpacing="8">
+        <BoxView Grid.Column="0" WidthRequest="10" CornerRadius="5" VerticalOptions="End" Color="{StaticResource Indigo}"
+                 HeightRequest="{Binding Level, Source={x:Reference Root}, Converter={StaticResource LevelToHeight}, ConverterParameter=0.35}" />
+        <BoxView Grid.Column="1" WidthRequest="10" CornerRadius="5" VerticalOptions="End" Color="{StaticResource Signal}"
+                 HeightRequest="{Binding Level, Source={x:Reference Root}, Converter={StaticResource LevelToHeight}, ConverterParameter=0.6}" />
+        <BoxView Grid.Column="2" WidthRequest="10" CornerRadius="5" VerticalOptions="End" Color="{StaticResource Mint}"
+                 HeightRequest="{Binding Level, Source={x:Reference Root}, Converter={StaticResource LevelToHeight}, ConverterParameter=0.9}" />
+        <BoxView Grid.Column="3" WidthRequest="10" CornerRadius="5" VerticalOptions="End" Color="{StaticResource Signal}"
+                 HeightRequest="{Binding Level, Source={x:Reference Root}, Converter={StaticResource LevelToHeight}}" />
+        <BoxView Grid.Column="4" WidthRequest="10" CornerRadius="5" VerticalOptions="End" Color="{StaticResource Mint}"
+                 HeightRequest="{Binding Level, Source={x:Reference Root}, Converter={StaticResource LevelToHeight}, ConverterParameter=0.7}" />
+        <BoxView Grid.Column="5" WidthRequest="10" CornerRadius="5" VerticalOptions="End" Color="{StaticResource Signal}"
+                 HeightRequest="{Binding Level, Source={x:Reference Root}, Converter={StaticResource LevelToHeight}, ConverterParameter=0.5}" />
+        <BoxView Grid.Column="6" WidthRequest="10" CornerRadius="5" VerticalOptions="End" Color="{StaticResource Indigo}"
+                 HeightRequest="{Binding Level, Source={x:Reference Root}, Converter={StaticResource LevelToHeight}, ConverterParameter=0.3}" />
+    </Grid>
+</ContentView>

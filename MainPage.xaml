@@ -5,56 +5,59 @@
              xmlns:components="clr-namespace:Stars.Client.Components"
              xmlns:vm="clr-namespace:Stars.Client"
              x:DataType="vm:MainViewModel"
-             Title="Reproducir">
+             Title="Reproductor">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20,24,20,32" Spacing="18">
-            <components:HeroHeader x:Name="Hero" Title="Stars"
-                                   Subtitle="El audio de tu PC, en este dispositivo." />
+        <VerticalStackLayout Padding="20,22,20,36" Spacing="18">
 
-            <components:FluffyCard x:Name="NowCard">
+            <components:AppHeader Subtitle="Reproductor"
+                                  Status="{Binding StatusText}"
+                                  StatusColor="{Binding StatusColor}" />
+
+            <!-- Live wave -->
+            <Border Style="{StaticResource Panel}">
                 <VerticalStackLayout Spacing="16">
-                    <components:StatusBadge Text="{Binding StatusText}" Icon="●"
-                                            BadgeColor="{Binding StatusColor}" />
+                    <components:StatusPill Text="{Binding StatusText}" PillColor="{Binding StatusColor}"
+                                           HorizontalOptions="Start" />
 
-                    <components:Equalizer Level="{Binding Level}" />
+                    <components:WaveMeter Level="{Binding Level}" />
 
-                    <Label Text="{Binding PacketsLabel}" Style="{StaticResource Caption}"
-                           HorizontalOptions="Center" />
-                    <Label Text="{Binding BufferLabel}" Style="{StaticResource Caption}"
-                           TextColor="{StaticResource AuroraLilac}" HorizontalOptions="Center" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <components:Readout Grid.Column="0" Label="VOLUMEN" Value="{Binding VolumeLabel}"
+                                            Accent="{StaticResource Indigo}" />
+                        <components:Readout Grid.Column="1" Label="PAQUETES" Value="{Binding PacketsLabel}"
+                                            Accent="{StaticResource Signal}" />
+                    </Grid>
 
-                    <ActivityIndicator IsRunning="{Binding IsReconnecting}"
-                                       IsVisible="{Binding IsReconnecting}"
-                                       Color="{StaticResource AuroraLilac}" />
+                    <Label Text="{Binding BufferLabel}" Style="{StaticResource Caption}" HorizontalOptions="Center"
+                           TextColor="{StaticResource Signal}" />
 
-                    <VerticalStackLayout Spacing="2">
-                        <Grid ColumnDefinitions="Auto,*,Auto">
-                            <Label Text="🔊  Volumen" Style="{StaticResource Caption}" />
-                            <Label Grid.Column="2" Text="{Binding VolumeLabel}" Style="{StaticResource Caption}"
-                                   TextColor="{StaticResource AuroraLilac}" />
-                        </Grid>
+                    <ActivityIndicator IsRunning="{Binding IsReconnecting}" IsVisible="{Binding IsReconnecting}"
+                                       Color="{StaticResource Signal}" />
+
+                    <VerticalStackLayout Spacing="4">
+                        <components:SectionHeader Title="NIVEL" Trailing="{Binding VolumeLabel}" />
                         <Slider Minimum="0" Maximum="1" Value="{Binding Volume, Mode=TwoWay}"
-                                MinimumTrackColor="{StaticResource AuroraLilac}"
-                                MaximumTrackColor="#DCE5DD" ThumbColor="{StaticResource AuroraSky}" />
+                                MinimumTrackColor="{StaticResource Signal}"
+                                MaximumTrackColor="#332DD4BF" ThumbColor="{StaticResource Signal}" />
                     </VerticalStackLayout>
 
                     <Button Text="Desconectar" Command="{Binding DisconnectCommand}"
                             Style="{StaticResource PillWarm}" IsVisible="{Binding IsPlaying}" />
-                    <Label Text="Ve a la pestaña «Conexión» para elegir un servidor."
-                           Style="{StaticResource Caption}" HorizontalOptions="Center"
-                           IsVisible="{Binding IsIdle}" />
+                    <Button Text="Conectar" Command="{Binding SelectServerCommand}"
+                            Style="{StaticResource Pill}" IsVisible="{Binding IsIdle}" />
                 </VerticalStackLayout>
-            </components:FluffyCard>
+            </Border>
 
-            <components:FluffyCard x:Name="TipCard">
+            <Border Style="{StaticResource Panel}">
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="Sugerencias" Style="{StaticResource SectionTitle}" />
-                    <Label Text="• Si hay cortes, activa el modo adaptativo en Calidad." Style="{StaticResource Caption}" />
-                    <Label Text="• Elige la salida de audio en Conexión." Style="{StaticResource Caption}" />
-                    <Label Text="• Cambia el tema claro u oscuro en Ajustes." Style="{StaticResource Caption}" />
+                    <components:SectionHeader Title="ATRÁS" />
+                    <Label Text="• ¿Cortes? Activa el bitrate adaptativo en Calidad." Style="{StaticResource Caption}" />
+                    <Label Text="• Elige salida de audio en Conexión." Style="{StaticResource Caption}" />
+                    <Label Text="• Cambia de tema en Sistema." Style="{StaticResource Caption}" />
                 </VerticalStackLayout>
-            </components:FluffyCard>
+            </Border>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

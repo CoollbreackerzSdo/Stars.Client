@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Stars.Client.Components"
+             x:Class="Stars.Client.Components.StatusPill"
+             x:DataType="local:StatusPill"
+             x:Name="Root">
+    <Border Style="{StaticResource Badge}" BackgroundColor="{Binding PillColor, Source={x:Reference Root}}"
+            HorizontalOptions="Start">
+        <HorizontalStackLayout Spacing="8">
+            <BoxView WidthRequest="8" HeightRequest="8" CornerRadius="4" Color="White" VerticalOptions="Center" />
+            <Label Text="{Binding Text, Source={x:Reference Root}}" FontSize="13"
+                   FontFamily="OpenSansSemibold" TextColor="White" VerticalOptions="Center" />
+        </HorizontalStackLayout>
+    </Border>
+</ContentView>

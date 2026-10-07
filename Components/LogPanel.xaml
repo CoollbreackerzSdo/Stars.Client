@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Stars.Client.Components"
+             x:Class="Stars.Client.Components.LogPanel"
+             x:DataType="local:LogPanel"
+             x:Name="Root">
+    <VerticalStackLayout Spacing="10">
+        <components:SectionHeader xmlns:components="clr-namespace:Stars.Client.Components"
+                                  Title="{Binding Title, Source={x:Reference Root}}" />
+        <Border Style="{StaticResource Inset}" Padding="12,8">
+            <CollectionView ItemsSource="{Binding ItemsSource, Source={x:Reference Root}}"
+                            HeightRequest="{Binding ListHeight, Source={x:Reference Root}}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <Label Text="{Binding .}" FontFamily="OpenSansRegular" FontSize="12"
+                               LineBreakMode="TailTruncation"
+                               TextColor="{AppThemeBinding Light={StaticResource LightTextSoft}, Dark={StaticResource DarkTextSoft}}"
+                               Padding="0,4" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+    </VerticalStackLayout>
+</ContentView>

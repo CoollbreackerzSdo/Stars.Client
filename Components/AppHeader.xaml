@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Stars.Client.Components"
+             x:Class="Stars.Client.Components.AppHeader"
+             x:DataType="local:AppHeader"
+             x:Name="Root">
+    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+        <BoxView Grid.Column="0" WidthRequest="10" HeightRequest="34" CornerRadius="3"
+                 Color="{StaticResource Signal}" VerticalOptions="Center" />
+        <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+            <Label Text="STARS" FontFamily="OpenSansSemibold" FontSize="20" CharacterSpacing="4"
+                   TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" />
+            <Label Text="{Binding Subtitle, Source={x:Reference Root}}" Style="{StaticResource Caption}" />
+        </VerticalStackLayout>
+        <Label Grid.Column="2" Text="{Binding Status, Source={x:Reference Root}}"
+               FontFamily="OpenSansSemibold" FontSize="12" VerticalOptions="Center"
+               TextColor="{Binding StatusColor, Source={x:Reference Root}}" />
+    </Grid>
+</ContentView>

@@ -8,14 +8,17 @@
              Title="Conexión">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20,24,20,32" Spacing="18">
-            <components:HeroHeader Title="Conexión"
-                                   Subtitle="Elige cómo llegar al servidor." />
+        <VerticalStackLayout Padding="20,22,20,36" Spacing="18">
 
-            <components:FluffyCard x:Name="LinkCard">
+            <components:AppHeader Subtitle="Conexión"
+                                  Status="{Binding StatusText}"
+                                  StatusColor="{Binding StatusColor}" />
+
+            <Border Style="{StaticResource Panel}">
                 <VerticalStackLayout Spacing="16">
-                    <components:TransportSelector SelectedKind="{Binding SelectedKind, Mode=TwoWay}"
-                                                  BluetoothSupported="{Binding BluetoothSupported}" />
+                    <components:SectionHeader Title="ENLACE" />
+                    <components:LinkPicker SelectedKind="{Binding SelectedKind, Mode=TwoWay}"
+                                           BluetoothSupported="{Binding BluetoothSupported}" />
 
                     <Grid ColumnDefinitions="2*,*" ColumnSpacing="12" IsVisible="{Binding IsWifiMode}">
                         <Entry Grid.Column="0" Text="{Binding Host, Mode=TwoWay}"
@@ -25,26 +28,23 @@
                     </Grid>
 
                     <Entry Text="{Binding BluetoothAddress, Mode=TwoWay}"
-                           Placeholder="Dirección del dispositivo emparejado"
+                           Placeholder="Dispositivo emparejado"
                            IsVisible="{Binding IsBluetoothMode}" Style="{StaticResource EntryBox}" />
 
-                    <Button Text="Conectar" Command="{Binding ConnectCommand}"
-                            Style="{StaticResource Pill}" />
-                    <Button Text="🔍  Buscar" Command="{Binding DiscoverCommand}"
-                            Style="{StaticResource PillSoft}" />
+                    <Button Text="Conectar" Command="{Binding ConnectCommand}" Style="{StaticResource Pill}" />
+                    <Button Text="Buscar servidores" Command="{Binding DiscoverCommand}" Style="{StaticResource PillSoft}" />
                 </VerticalStackLayout>
-            </components:FluffyCard>
+            </Border>
 
-            <components:FluffyCard x:Name="ServersCard">
-                <components:ServerList ItemsSource="{Binding Servers}"
+            <Border Style="{StaticResource Panel}">
+                <components:DeviceList ItemsSource="{Binding Servers}"
                                        ServerSelected="OnServerSelected" ListHeight="120" />
-            </components:FluffyCard>
+            </Border>
 
-            <components:FluffyCard x:Name="OutputCard">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Salida de audio" Style="{StaticResource SectionTitle}" />
-                    <Label Text="Genérica del sistema o un dispositivo concreto." Style="{StaticResource Caption}" />
-                    <Border Style="{StaticResource Tile}" Padding="14,0">
+            <Border Style="{StaticResource Panel}">
+                <VerticalStackLayout Spacing="12">
+                    <components:SectionHeader Title="SALIDA DE AUDIO" />
+                    <Border Style="{StaticResource Inset}">
                         <Picker ItemsSource="{Binding Outputs}"
                                 SelectedItem="{Binding SelectedOutput, Mode=TwoWay}"
                                 ItemDisplayBinding="{Binding Name}"
@@ -52,7 +52,8 @@
                                 Title="Elige una salida" />
                     </Border>
                 </VerticalStackLayout>
-            </components:FluffyCard>
+            </Border>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

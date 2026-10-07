@@ -27,6 +27,15 @@ public partial class MainViewModel : ObservableObject
         BluetoothSupported = BluetoothDiscovery.IsSupported;
         IsDark = Application.Current?.RequestedTheme == AppTheme.Dark;
         _selectedBitrate = BitrateOptions[2];
+        _selectedChannel = ChannelOptions[0];
+        EqBands = new ObservableCollection<EqBand>(
+        [
+            new EqBand(0, "60 Hz", OnEqBandChanged),
+            new EqBand(1, "230 Hz", OnEqBandChanged),
+            new EqBand(2, "1 kHz", OnEqBandChanged),
+            new EqBand(3, "4 kHz", OnEqBandChanged),
+            new EqBand(4, "14 kHz", OnEqBandChanged),
+        ]);
 
         LoadOutputs();
 
@@ -137,6 +146,53 @@ public partial class MainViewModel : ObservableObject
 
     public bool IsManualBitrate => !AdaptiveBitrate;
 
+    // ---- Channel & equalizer -------------------------------------------------
+    public sealed record ChannelOption(AudioChannelMode Mode, string Label);
+
+    public ObservableCollection<ChannelOption> ChannelOptions { get; } = new()
+    {
+        new(AudioChannelMode.Stereo, "Estéreo"),
+        new(AudioChannelMode.Mono, "Mono"),
+        new(AudioChannelMode.Left, "Izquierdo"),
+        new(AudioChannelMode.Right, "Derecho"),
+    };
+
+    private ChannelOption _selectedChannel;
+
+    public ChannelOption SelectedChannel
+    {
+        get => _selectedChannel;
+        set
+        {
+            if (value is null || !SetProperty(ref _selectedChannel, value))
+                return;
+
+            _services.ChannelMode = value.Mode;
+            _services.ApplyChannelEq();
+        }
+    }
+
+    /// <summary>One adjustable equalizer band.</summary>
+    public ObservableCollection<EqBand> EqBands { get; }
+
+    private void OnEqBandChanged(int index, int gainDb)
+    {
+        if (index < 0 || index >= _services.EqGainsDb.Length)
+            return;
+
+        _services.EqGainsDb[index] = gainDb;
+        _services.ApplyChannelEq();
+    }
+
+    public void ResetEq()
+    {
+        foreach (var band in EqBands)
+            band.GainDb = 0;
+    }
+
+    [RelayCommand]
+    private void ResetEqCommand() => ResetEq();
+
     [ObservableProperty]
     public partial string QualityLabel { get; private set; } = "128 kbps · FEC";
 
@@ -222,6 +278,19 @@ public partial class MainViewModel : ObservableObject
     private bool CanDisconnect() => IsPlaying;
 
     private bool CanDiscover() => !IsConnecting;
+
+    [RelayCommand]
+    private async Task SelectServerAsync()
+    {
+        try
+        {
+            await Shell.Current.GoToAsync("//connect");
+        }
+        catch
+        {
+            // navigation is best-effort
+        }
+    }
 
     [RelayCommand(CanExecute = nameof(CanConnect))]
     private async Task ConnectAsync()
