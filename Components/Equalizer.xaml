@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:shared="clr-namespace:Stars.Client.Shared"
+             x:Class="Stars.Client.Components.Equalizer"
+             x:Name="Root">
+
+    <ContentView.Resources>
+        <shared:LevelToHeightConverter x:Key="LevelToHeight" />
+    </ContentView.Resources>
+
+    <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" HeightRequest="96">
+        <BoxView WidthRequest="16" CornerRadius="8" VerticalOptions="End"
+                 Background="{StaticResource PrimaryBrush}"
+                 HeightRequest="{Binding Level, Source={x:Reference Root}, Converter={StaticResource LevelToHeight}, ConverterParameter=0.7}" />
+        <BoxView WidthRequest="16" CornerRadius="8" VerticalOptions="End"
+                 Background="{StaticResource WarmBrush}"
+                 HeightRequest="{Binding Level, Source={x:Reference Root}, Converter={StaticResource LevelToHeight}, ConverterParameter=1.0}" />
+        <BoxView WidthRequest="16" CornerRadius="8" VerticalOptions="End"
+                 Background="{StaticResource MintBrush}"
+                 HeightRequest="{Binding Level, Source={x:Reference Root}, Converter={StaticResource LevelToHeight}, ConverterParameter=0.8}" />
+        <BoxView WidthRequest="16" CornerRadius="8" VerticalOptions="End"
+                 Background="{StaticResource PrimaryBrush}"
+                 HeightRequest="{Binding Level, Source={x:Reference Root}, Converter={StaticResource LevelToHeight}, ConverterParameter=0.5}" />
+    </HorizontalStackLayout>
+
+</ContentView>

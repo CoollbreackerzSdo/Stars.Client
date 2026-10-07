@@ -1,10 +1,12 @@
-﻿<Application xmlns:local="clr-namespace:Stars.Client"
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns:local="clr-namespace:Stars.Client"
              x:Class="Stars.Client.App">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/FluffyTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

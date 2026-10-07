@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Stars.Client.ConnectionPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:Stars.Client.Components"
+             Title="Conexión">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,24,20,32" Spacing="18">
+
+            <components:HeroHeader Title="Conexión"
+                                   Subtitle="Elige cómo llegar al servidor." />
+
+            <components:FluffyCard x:Name="LinkCard">
+                <VerticalStackLayout Spacing="16">
+                    <components:TransportSelector SelectedKind="{Binding SelectedKind, Mode=TwoWay}"
+                                                  BluetoothSupported="{Binding BluetoothSupported}" />
+
+                    <Grid ColumnDefinitions="2*,*" ColumnSpacing="12" IsVisible="{Binding IsWifiMode}">
+                        <Entry Grid.Column="0" Text="{Binding Host, Mode=TwoWay}"
+                               Placeholder="192.168.1.10" Style="{StaticResource EntryBox}" />
+                        <Entry Grid.Column="1" Text="{Binding Port, Mode=TwoWay}"
+                               Placeholder="45890" Keyboard="Numeric" Style="{StaticResource EntryBox}" />
+                    </Grid>
+
+                    <Entry Text="{Binding BluetoothAddress, Mode=TwoWay}"
+                           Placeholder="Dirección del dispositivo emparejado"
+                           IsVisible="{Binding IsBluetoothMode}" Style="{StaticResource EntryBox}" />
+
+                    <Button Text="Conectar" Command="{Binding ConnectCommand}" Style="{StaticResource Pill}" />
+                    <Button Text="🔍  Buscar" Command="{Binding DiscoverCommand}" Style="{StaticResource PillSoft}" />
+                </VerticalStackLayout>
+            </components:FluffyCard>
+
+            <components:FluffyCard x:Name="ServersCard">
+                <components:ServerList ItemsSource="{Binding Servers}"
+                                       ServerSelected="OnServerSelected" ListHeight="120" />
+            </components:FluffyCard>
+
+            <components:FluffyCard x:Name="OutputCard">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Salida de audio" Style="{StaticResource SectionTitle}" />
+                    <Label Text="Genérica del sistema o un dispositivo concreto." Style="{StaticResource Caption}" />
+                    <Border Style="{StaticResource Tile}" Padding="14,0">
+                        <Picker ItemsSource="{Binding Outputs}"
+                                SelectedItem="{Binding SelectedOutput, Mode=TwoWay}"
+                                ItemDisplayBinding="{Binding Name}"
+                                TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}"
+                                Title="Elige una salida" />
+                    </Border>
+                </VerticalStackLayout>
+            </components:FluffyCard>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

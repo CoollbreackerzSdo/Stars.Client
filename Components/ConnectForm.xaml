@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Stars.Client.Components.ConnectForm"
+             x:Name="Root">
+
+    <VerticalStackLayout Spacing="12">
+        <Label Text="Conectar a un servidor" Style="{StaticResource SectionTitle}" />
+
+        <Grid ColumnDefinitions="2*,*" ColumnSpacing="12">
+            <Entry Grid.Column="0"
+                   Text="{Binding Host, Source={x:Reference Root}, Mode=TwoWay}"
+                   Placeholder="192.168.1.10" Style="{StaticResource EntryBox}" />
+            <Entry Grid.Column="1"
+                   Text="{Binding Port, Source={x:Reference Root}, Mode=TwoWay}"
+                   Placeholder="45890" Keyboard="Numeric" Style="{StaticResource EntryBox}" />
+        </Grid>
+
+        <Button Text="Conectar"
+                Command="{Binding ConnectCommand, Source={x:Reference Root}}"
+                Style="{StaticResource Pill}" />
+
+        <Button Text="🔍  Buscar en la red"
+                Command="{Binding DiscoverCommand, Source={x:Reference Root}}"
+                Style="{StaticResource PillSoft}" />
+    </VerticalStackLayout>
+
+</ContentView>

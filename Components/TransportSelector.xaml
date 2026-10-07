@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Stars.Client.Components.TransportSelector"
+             x:Name="Root">
+
+    <VerticalStackLayout Spacing="10">
+        <Label Text="Conexión" Style="{StaticResource SectionTitle}" />
+
+        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+            <Border x:Name="WifiOption" Grid.Column="0" Padding="8,14" StrokeThickness="0">
+                <Border.StrokeShape><RoundRectangle CornerRadius="20" /></Border.StrokeShape>
+                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnWifiTapped" /></Border.GestureRecognizers>
+                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                    <Label Text="📶" FontSize="22" HorizontalOptions="Center" />
+                    <Label x:Name="WifiLabel" Text="Wi-Fi" FontSize="13" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border x:Name="UsbOption" Grid.Column="1" Padding="8,14" StrokeThickness="0">
+                <Border.StrokeShape><RoundRectangle CornerRadius="20" /></Border.StrokeShape>
+                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnUsbTapped" /></Border.GestureRecognizers>
+                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                    <Label Text="🔌" FontSize="22" HorizontalOptions="Center" />
+                    <Label x:Name="UsbLabel" Text="USB" FontSize="13" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border x:Name="BluetoothOption" Grid.Column="2" Padding="8,14" StrokeThickness="0">
+                <Border.StrokeShape><RoundRectangle CornerRadius="20" /></Border.StrokeShape>
+                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnBluetoothTapped" /></Border.GestureRecognizers>
+                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                    <Label Text="🛜" FontSize="22" HorizontalOptions="Center" />
+                    <Label x:Name="BluetoothLabel" Text="Bluetooth" FontSize="13" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </VerticalStackLayout>
+
+</ContentView>

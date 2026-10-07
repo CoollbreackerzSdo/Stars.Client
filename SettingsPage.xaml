@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Stars.Client.SettingsPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:Stars.Client.Components"
+             Title="Ajustes">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,24,20,32" Spacing="18">
+
+            <components:HeroHeader Title="Ajustes"
+                                   Subtitle="Apariencia y preferencias." />
+
+            <components:FluffyCard x:Name="AppearanceCard">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="Apariencia" Style="{StaticResource SectionTitle}" />
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                        <Label Grid.Column="0" Text="🌗" FontSize="22" VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="Tema oscuro" FontFamily="OpenSansSemibold" FontSize="15"
+                                   TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" />
+                            <Label Text="Alterna entre claro y oscuro." Style="{StaticResource Caption}" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="2" IsToggled="{Binding IsDark, Mode=TwoWay}"
+                                OnColor="{StaticResource AuroraLilac}" VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+            </components:FluffyCard>
+
+            <components:FluffyCard x:Name="ActivityCard">
+                <components:ActivityLog Title="Actividad" ItemsSource="{Binding LogLines}" ListHeight="200" />
+            </components:FluffyCard>
+
+            <components:FluffyCard x:Name="AboutCard">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Acerca de" Style="{StaticResource SectionTitle}" />
+                    <Label Text="Stars · cliente · v1.0.0" Style="{StaticResource Caption}" />
+                    <Label Text=".NET 11 · MAUI · Opus" Style="{StaticResource Caption}" />
+                </VerticalStackLayout>
+            </components:FluffyCard>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
