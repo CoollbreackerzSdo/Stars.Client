@@ -8,10 +8,7 @@ public partial class HeroHeader : ContentView
     public static readonly BindableProperty SubtitleProperty =
         BindableProperty.Create(nameof(Subtitle), typeof(string), typeof(HeroHeader), string.Empty);
 
-    public HeroHeader()
-    {
-        InitializeComponent();
-    }
+    public HeroHeader() => InitializeComponent();
 
     public string Title
     {

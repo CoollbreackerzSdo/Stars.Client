@@ -4,9 +4,12 @@ namespace Stars.Client;
 
 public partial class App : Application
 {
-	public App()
+	private readonly IServiceProvider _services;
+
+	public App(IServiceProvider services)
 	{
 		InitializeComponent();
+		_services = services;
 
 		// Apply the saved theme before the UI is built so it never recreates the Activity.
 		var dark = Preferences.Default.Get("stars-theme-dark", false);
@@ -18,6 +21,6 @@ public partial class App : Application
 
 	protected override Window CreateWindow(IActivationState? activationState)
 	{
-		return new Window(new AppShell());
+		return new Window(_services.GetRequiredService<AppShell>());
 	}
 }

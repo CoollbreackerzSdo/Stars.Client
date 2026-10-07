@@ -13,11 +13,12 @@ namespace Stars.Client;
 /// <summary>View model for the client slice: discover/connect the server and render the stream.</summary>
 public partial class MainViewModel : ObservableObject
 {
-    private readonly AppServices _services = new();
+    private readonly AppServices _services;
     private CancellationTokenSource? _tickCts;
 
-    public MainViewModel()
+    public MainViewModel(AppServices services)
     {
+        _services = services;
         _services.Log += message => MainThread.BeginInvokeOnMainThread(() => AppendLog(message));
         _services.PlaybackStopped += () => MainThread.BeginInvokeOnMainThread(HandleStopped);
         _services.ReconnectingChanged += value => MainThread.BeginInvokeOnMainThread(() => OnReconnectingChanged(value));
@@ -180,12 +181,12 @@ public partial class MainViewModel : ObservableObject
     public partial string StatusText { get; private set; } = "Desconectado";
 
     [ObservableProperty]
-    public partial Color StatusColor { get; private set; } = Color.FromArgb("#6E668F");
+    public partial Color StatusColor { get; private set; } = Color.FromArgb("#536258");
 
     /// <summary>Playback volume between 0 and 1.</summary>
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(VolumeLabel))]
-    public partial double Volume { get; set; } = 0.8;
+    public partial double Volume { get; set; } = PhoneAudioVolume.GetMediaVolume();
 
     public string VolumeLabel => $"{Volume * 100:0}%";
 
@@ -202,7 +203,7 @@ public partial class MainViewModel : ObservableObject
         OnPropertyChanged(nameof(IsBluetoothMode));
     }
 
-    /// <summary>Pseudo level for the fluffy equalizer animation (0..1).</summary>
+    /// <summary>Current playback activity level, from 0 to 1.</summary>
     [ObservableProperty]
     public partial double Level { get; private set; }
 
@@ -238,7 +239,7 @@ public partial class MainViewModel : ObservableObject
 
         IsConnecting = true;
         StatusText = "Conectando…";
-        StatusColor = Color.FromArgb("#FF9E6D");
+        StatusColor = Color.FromArgb("#94501F");
 
         try
         {
@@ -246,14 +247,14 @@ public partial class MainViewModel : ObservableObject
             await _services.StartAsync(endpoint);
             IsPlaying = true;
             StatusText = "En vivo";
-            StatusColor = Color.FromArgb("#4ED8B4");
+            StatusColor = Color.FromArgb("#1F6B4E");
             StartTicker();
         }
         catch (Exception ex)
         {
             IsPlaying = false;
             StatusText = "Error de conexión";
-            StatusColor = Color.FromArgb("#FF6B6B");
+            StatusColor = Color.FromArgb("#A64335");
             AppendLog($"No se pudo conectar: {ex.Message}");
             await Toast.Make($"No se pudo conectar: {ex.Message}").Show();
         }
@@ -297,7 +298,7 @@ public partial class MainViewModel : ObservableObject
     {
         IsConnecting = true;
         StatusText = "Buscando…";
-        StatusColor = Color.FromArgb("#4EA8FF");
+        StatusColor = Color.FromArgb("#3E7480");
 
         try
         {
@@ -336,7 +337,7 @@ public partial class MainViewModel : ObservableObject
             }
 
             StatusText = "Desconectado";
-            StatusColor = Color.FromArgb("#6E668F");
+            StatusColor = Color.FromArgb("#536258");
         }
         catch (Exception ex)
         {
@@ -368,12 +369,12 @@ public partial class MainViewModel : ObservableObject
         if (reconnecting)
         {
             StatusText = "Reconectando…";
-            StatusColor = Color.FromArgb("#FF9E6D");
+            StatusColor = Color.FromArgb("#94501F");
         }
         else if (_services.IsConnected)
         {
             StatusText = "En vivo";
-            StatusColor = Color.FromArgb("#4ED8B4");
+            StatusColor = Color.FromArgb("#1F6B4E");
         }
     }
 
@@ -384,7 +385,7 @@ public partial class MainViewModel : ObservableObject
         IsReconnecting = false;
         Level = 0;
         StatusText = "Desconectado";
-        StatusColor = Color.FromArgb("#6E668F");
+        StatusColor = Color.FromArgb("#536258");
     }
 
     private void StartTicker()

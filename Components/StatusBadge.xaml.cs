@@ -11,10 +11,7 @@ public partial class StatusBadge : ContentView
     public static readonly BindableProperty BadgeColorProperty =
         BindableProperty.Create(nameof(BadgeColor), typeof(Color), typeof(StatusBadge), Colors.Gray);
 
-    public StatusBadge()
-    {
-        InitializeComponent();
-    }
+    public StatusBadge() => InitializeComponent();
 
     public string Text
     {

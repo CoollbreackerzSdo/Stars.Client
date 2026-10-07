@@ -3,11 +3,12 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:components="clr-namespace:Stars.Client.Components"
+             xmlns:vm="clr-namespace:Stars.Client"
+             x:DataType="vm:MainViewModel"
              Title="Conexión">
 
     <ScrollView>
         <VerticalStackLayout Padding="20,24,20,32" Spacing="18">
-
             <components:HeroHeader Title="Conexión"
                                    Subtitle="Elige cómo llegar al servidor." />
 
@@ -27,8 +28,10 @@
                            Placeholder="Dirección del dispositivo emparejado"
                            IsVisible="{Binding IsBluetoothMode}" Style="{StaticResource EntryBox}" />
 
-                    <Button Text="Conectar" Command="{Binding ConnectCommand}" Style="{StaticResource Pill}" />
-                    <Button Text="🔍  Buscar" Command="{Binding DiscoverCommand}" Style="{StaticResource PillSoft}" />
+                    <Button Text="Conectar" Command="{Binding ConnectCommand}"
+                            Style="{StaticResource Pill}" />
+                    <Button Text="🔍  Buscar" Command="{Binding DiscoverCommand}"
+                            Style="{StaticResource PillSoft}" />
                 </VerticalStackLayout>
             </components:FluffyCard>
 
@@ -50,7 +53,6 @@
                     </Border>
                 </VerticalStackLayout>
             </components:FluffyCard>
-
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

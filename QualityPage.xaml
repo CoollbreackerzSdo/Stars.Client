@@ -3,34 +3,35 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:components="clr-namespace:Stars.Client.Components"
+             xmlns:vm="clr-namespace:Stars.Client"
+             x:DataType="vm:MainViewModel"
              Title="Calidad">
 
     <ScrollView>
         <VerticalStackLayout Padding="20,24,20,32" Spacing="18">
-
             <components:HeroHeader Title="Calidad de audio"
                                    Subtitle="Ajusta el bitrate y la recuperación de pérdidas." />
 
-            <!-- Bitrate -->
             <components:FluffyCard x:Name="BitrateCard">
                 <VerticalStackLayout Spacing="14">
                     <Label Text="Bitrate" Style="{StaticResource SectionTitle}" />
-                    <Label Text="Más bitrate = mejor calidad, más ancho de banda." Style="{StaticResource Caption}" />
-
-                    <Border Style="{StaticResource Tile}" Padding="14,0" IsVisible="{Binding IsManualBitrate}">
+                    <Label Text="Más bitrate = mejor calidad, más ancho de banda."
+                           Style="{StaticResource Caption}" />
+                    <Border Style="{StaticResource Tile}" Padding="14,0"
+                            IsVisible="{Binding IsManualBitrate}">
                         <Picker ItemsSource="{Binding BitrateOptions}"
                                 SelectedItem="{Binding SelectedBitrate, Mode=TwoWay}"
                                 ItemDisplayBinding="{Binding Label}"
                                 TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}"
                                 Title="Bitrate" />
                     </Border>
-
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
                         <Label Grid.Column="0" Text="⚡" FontSize="22" VerticalOptions="Center" />
                         <VerticalStackLayout Grid.Column="1">
                             <Label Text="Bitrate adaptativo" FontFamily="OpenSansSemibold" FontSize="15"
                                    TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" />
-                            <Label Text="Se ajusta solo según el jitter y las pérdidas." Style="{StaticResource Caption}" />
+                            <Label Text="Se ajusta solo según el jitter y las pérdidas."
+                                   Style="{StaticResource Caption}" />
                         </VerticalStackLayout>
                         <Switch Grid.Column="2" IsToggled="{Binding AdaptiveBitrate, Mode=TwoWay}"
                                 OnColor="{StaticResource AuroraLilac}" VerticalOptions="Center" />
@@ -38,17 +39,16 @@
                 </VerticalStackLayout>
             </components:FluffyCard>
 
-            <!-- Loss recovery -->
             <components:FluffyCard x:Name="FecCard">
                 <VerticalStackLayout Spacing="14">
                     <Label Text="Recuperación de pérdidas" Style="{StaticResource SectionTitle}" />
-
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
                         <Label Grid.Column="0" Text="🛡" FontSize="22" VerticalOptions="Center" />
                         <VerticalStackLayout Grid.Column="1">
-                            <Label Text="FEC (corrección de errores)" FontFamily="OpenSansSemibold" FontSize="15"
-                                   TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" />
-                            <Label Text="Oculta pérdidas de paquetes en enlaces inestables." Style="{StaticResource Caption}" />
+                            <Label Text="FEC (corrección de errores)" FontFamily="OpenSansSemibold"
+                                   FontSize="15" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" />
+                            <Label Text="Oculta pérdidas de paquetes en enlaces inestables."
+                                   Style="{StaticResource Caption}" />
                         </VerticalStackLayout>
                         <Switch Grid.Column="2" IsToggled="{Binding UseFec, Mode=TwoWay}"
                                 OnColor="{StaticResource AuroraMint}" VerticalOptions="Center" />
@@ -56,18 +56,15 @@
                 </VerticalStackLayout>
             </components:FluffyCard>
 
-            <!-- Live metrics -->
             <components:FluffyCard x:Name="MetricsCard">
                 <VerticalStackLayout Spacing="12">
                     <Label Text="Estado en vivo" Style="{StaticResource SectionTitle}" />
-                    <HorizontalStackLayout Spacing="8">
-                        <components:StatusBadge Text="{Binding QualityLabel}" Icon="🎚" BadgeColor="#7C5CFF" />
-                    </HorizontalStackLayout>
+                    <components:StatusBadge Text="{Binding QualityLabel}" Icon="🎚"
+                                            BadgeColor="{StaticResource AuroraLilac}" />
                     <Label Text="{Binding BufferLabel}" Style="{StaticResource Caption}" />
                     <Label Text="{Binding PacketsLabel}" Style="{StaticResource Caption}" />
                 </VerticalStackLayout>
             </components:FluffyCard>
-
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

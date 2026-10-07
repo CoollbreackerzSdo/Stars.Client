@@ -3,15 +3,14 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:components="clr-namespace:Stars.Client.Components"
+             xmlns:vm="clr-namespace:Stars.Client"
+             x:DataType="vm:MainViewModel"
              Title="Reproducir">
 
     <ScrollView>
         <VerticalStackLayout Padding="20,24,20,32" Spacing="18">
-
-            <components:HeroHeader
-                x:Name="Hero"
-                Title="Stars"
-                Subtitle="El audio de tu PC, en este dispositivo." />
+            <components:HeroHeader x:Name="Hero" Title="Stars"
+                                   Subtitle="El audio de tu PC, en este dispositivo." />
 
             <components:FluffyCard x:Name="NowCard">
                 <VerticalStackLayout Spacing="16">
@@ -37,12 +36,11 @@
                         </Grid>
                         <Slider Minimum="0" Maximum="1" Value="{Binding Volume, Mode=TwoWay}"
                                 MinimumTrackColor="{StaticResource AuroraLilac}"
-                                MaximumTrackColor="#E5DFFF" ThumbColor="{StaticResource AuroraSky}" />
+                                MaximumTrackColor="#DCE5DD" ThumbColor="{StaticResource AuroraSky}" />
                     </VerticalStackLayout>
 
                     <Button Text="Desconectar" Command="{Binding DisconnectCommand}"
                             Style="{StaticResource PillWarm}" IsVisible="{Binding IsPlaying}" />
-
                     <Label Text="Ve a la pestaña «Conexión» para elegir un servidor."
                            Style="{StaticResource Caption}" HorizontalOptions="Center"
                            IsVisible="{Binding IsIdle}" />
@@ -52,12 +50,11 @@
             <components:FluffyCard x:Name="TipCard">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Sugerencias" Style="{StaticResource SectionTitle}" />
-                    <Label Text="• Si hay cortes, activa el modo adaptativo en «Calidad»." Style="{StaticResource Caption}" />
-                    <Label Text="• Elige la salida de audio en «Conexión»." Style="{StaticResource Caption}" />
-                    <Label Text="• Cambia de tema claro u oscuro en «Ajustes»." Style="{StaticResource Caption}" />
+                    <Label Text="• Si hay cortes, activa el modo adaptativo en Calidad." Style="{StaticResource Caption}" />
+                    <Label Text="• Elige la salida de audio en Conexión." Style="{StaticResource Caption}" />
+                    <Label Text="• Cambia el tema claro u oscuro en Ajustes." Style="{StaticResource Caption}" />
                 </VerticalStackLayout>
             </components:FluffyCard>
-
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

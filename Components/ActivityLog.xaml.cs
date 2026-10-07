@@ -1,6 +1,7 @@
 using System.Collections;
 
 namespace Stars.Client.Components;
+
 public partial class ActivityLog : ContentView
 {
     public static readonly BindableProperty TitleProperty =
@@ -12,10 +13,7 @@ public partial class ActivityLog : ContentView
     public static readonly BindableProperty ListHeightProperty =
         BindableProperty.Create(nameof(ListHeight), typeof(double), typeof(ActivityLog), 200.0);
 
-    public ActivityLog()
-    {
-        InitializeComponent();
-    }
+    public ActivityLog() => InitializeComponent();
 
     public string Title
     {

@@ -14,13 +14,9 @@ public partial class ServerList : ContentView
     public static readonly BindableProperty ListHeightProperty =
         BindableProperty.Create(nameof(ListHeight), typeof(double), typeof(ServerList), 120.0);
 
-    public ServerList()
-    {
-        InitializeComponent();
-    }
-
-    /// <summary>Raised when the user taps a discovered server.</summary>
     public event EventHandler<DiscoveredServer>? ServerSelected;
+
+    public ServerList() => InitializeComponent();
 
     public string Title
     {
@@ -44,8 +40,5 @@ public partial class ServerList : ContentView
     {
         if (e.CurrentSelection.FirstOrDefault() is DiscoveredServer server)
             ServerSelected?.Invoke(this, server);
-
-        if (sender is CollectionView view)
-            view.SelectedItem = null;
     }
 }

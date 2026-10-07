@@ -3,23 +3,14 @@
     x:Class="Stars.Client.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Stars.Client"
     Title="Stars"
     FlyoutBehavior="Disabled">
 
-    <TabBar>
-        <Tab Title="Reproducir" Route="play">
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
-        </Tab>
-        <Tab Title="Conexión" Route="connect">
-            <ShellContent ContentTemplate="{DataTemplate local:ConnectionPage}" />
-        </Tab>
-        <Tab Title="Calidad" Route="quality">
-            <ShellContent ContentTemplate="{DataTemplate local:QualityPage}" />
-        </Tab>
-        <Tab Title="Ajustes" Route="settings">
-            <ShellContent ContentTemplate="{DataTemplate local:SettingsPage}" />
-        </Tab>
+    <TabBar x:Name="RootTabBar">
+        <Tab x:Name="PlayTab" Title="Reproducir" Route="play" Icon="listen.png" />
+        <Tab x:Name="ConnectionTab" Title="Conexión" Route="connect" Icon="connection.png" />
+        <Tab x:Name="QualityTab" Title="Calidad" Route="quality" Icon="quality.png" />
+        <Tab x:Name="SettingsTab" Title="Ajustes" Route="settings" Icon="settings.png" />
     </TabBar>
 
 </Shell>
