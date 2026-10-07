@@ -27,13 +27,14 @@ public sealed class AudioPlayer : IDisposable
 
     private int _sampleRate;
     private int _channels;
+    private int _outputChannels;
     private int _frameSamples;
 
     private short[] _pcm = [];
     private byte[] _pcmBytes = [];
     private byte[] _silenceBytes = [];
 
-    private double _volume = 0.8;
+    private double _volume = PhoneAudioVolume.GetMediaVolume();
     private AudioOutputDevice _output = AudioOutputDevice.Default;
     private bool _primed;
 
@@ -44,7 +45,11 @@ public sealed class AudioPlayer : IDisposable
     public double Volume
     {
         get => _volume;
-        set => _volume = Math.Clamp(value, 0, 1);
+        set
+        {
+            _volume = Math.Clamp(value, 0, 1);
+            PhoneAudioVolume.SetMediaVolume(_volume);
+        }
     }
 
     public int BufferMilliseconds => _jitter.BufferMilliseconds;
@@ -67,10 +72,11 @@ public sealed class AudioPlayer : IDisposable
             _output = device ?? _output;
             _sampleRate = sampleRate;
             _channels = channels;
+            _outputChannels = channels == 1 ? 2 : channels;
             _frameSamples = frameSamplesPerChannel;
 
             _decoder = OpusCodecFactory.CreateDecoder(sampleRate, channels);
-            _sink = CreateSink(sampleRate, channels, _output);
+            _sink = CreateSink(sampleRate, _outputChannels, _output);
             if (_sink is null)
             {
                 _decoder.Dispose();
@@ -81,8 +87,9 @@ public sealed class AudioPlayer : IDisposable
 
             var samples = frameSamplesPerChannel * channels;
             _pcm = new short[samples];
-            _pcmBytes = new byte[samples * sizeof(short)];
-            _silenceBytes = new byte[samples * sizeof(short)];
+            var outputSamples = frameSamplesPerChannel * _outputChannels;
+            _pcmBytes = new byte[outputSamples * sizeof(short)];
+            _silenceBytes = new byte[outputSamples * sizeof(short)];
 
             _jitter.Reset();
             _primed = false;
@@ -135,7 +142,7 @@ public sealed class AudioPlayer : IDisposable
                 // ignore
             }
 
-            _sink = CreateSink(_sampleRate, _channels, _output);
+            _sink = CreateSink(_sampleRate, _outputChannels, _output);
             Log?.Invoke($"Salida de audio: «{_output.Name}».");
         }
     }
@@ -188,7 +195,9 @@ public sealed class AudioPlayer : IDisposable
     {
         IAudioSink? sink;
         IOpusDecoder? decoder;
+    #if !ANDROID
         double volume;
+    #endif
         byte[]? packet = null;
 
         lock (_gate)
@@ -198,7 +207,9 @@ public sealed class AudioPlayer : IDisposable
 
             sink = _sink;
             decoder = _decoder;
+#if !ANDROID
             volume = _volume;
+#endif
 
             // Pre-roll: wait until enough frames are buffered to absorb network jitter.
             if (!_primed)
@@ -227,11 +238,33 @@ public sealed class AudioPlayer : IDisposable
             return true;
 
         var sampleCount = decoded * _channels;
+#if !ANDROID
         if (volume < 0.999)
             ApplyGain(_pcm, sampleCount, volume);
+#endif
 
-        var byteCount = sampleCount * sizeof(short);
-        Buffer.BlockCopy(_pcm, 0, _pcmBytes, 0, byteCount);
+        int outputSampleCount;
+        if (_channels == 1 && _outputChannels == 2)
+        {
+            for (var i = 0; i < sampleCount; i++)
+            {
+                var sample = _pcm[i];
+                var outputIndex = i * 2;
+                _pcmBytes[outputIndex * sizeof(short)] = (byte)(sample & 0xFF);
+                _pcmBytes[outputIndex * sizeof(short) + 1] = (byte)(sample >> 8);
+                _pcmBytes[outputIndex * sizeof(short) + 2] = (byte)(sample & 0xFF);
+                _pcmBytes[outputIndex * sizeof(short) + 3] = (byte)(sample >> 8);
+            }
+
+            outputSampleCount = sampleCount * 2;
+        }
+        else
+        {
+            outputSampleCount = sampleCount;
+            Buffer.BlockCopy(_pcm, 0, _pcmBytes, 0, outputSampleCount * sizeof(short));
+        }
+
+        var byteCount = outputSampleCount * sizeof(short);
         WriteSafely(sink, _pcmBytes, byteCount);
         return true;
     }

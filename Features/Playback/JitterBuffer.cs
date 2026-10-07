@@ -28,7 +28,7 @@ public sealed class JitterBuffer
     private long _underruns;
     private long _dropped;
 
-    public JitterBuffer(int minDepth = 4, int maxDepth = 25)
+    public JitterBuffer(int minDepth = 2, int maxDepth = 10)
     {
         _minDepth = Math.Max(1, minDepth);
         _maxDepth = Math.Max(_minDepth, maxDepth);
@@ -131,6 +131,13 @@ public sealed class JitterBuffer
             var estimate = Math.Max(_jitterMs, _peakJitterMs);
             var desired = (int)Math.Ceiling(estimate / FrameMs) + 3;
             _targetDepth = Math.Clamp(desired, _minDepth, _maxDepth);
+
+            // Discard stale frames when the target shrinks or packets arrive in a burst.
+            while (_queue.Count > _targetDepth)
+            {
+                _queue.Dequeue();
+                Interlocked.Increment(ref _dropped);
+            }
         }
     }
 
